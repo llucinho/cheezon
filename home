@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheezon - The Ultimate Cheese Marketplace</title>
+    <style>
+        :root {
+            --primary: #FFD700;
+            --secondary: #FFF8E1;
+            --dark: #333;
+            --light: #fff;
+            --accent: #E65100;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        header {
+            background-color: var(--primary);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-container {
+            flex: 1;
+            margin: 0 2rem;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 4px;
+            border: none;
+        }
+        
+        .search-container button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1200/400') center/cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #e6c300;
+            transform: translateY(-2px);
+        }
+        
+        .categories {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+        
+        .categories h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .categories h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .category-card {
+            background-color: var(--secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-img {
+            height: 150px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .category-content {
+            padding: 1.5rem;
+        }
+        
+        .category-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .featured-products {
+            background-color: var(--secondary);
+            padding: 3rem 1rem;
+        }
+        
+        .featured-products h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .featured-products h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .products-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+        }
+        
+        .product-content h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 0.5rem 0;
+        }
+        
+        .product-rating {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .testimonials {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .testimonials h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: var(--secondary);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 3rem 1rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-column ul li a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .search-container {
+                margin: 1rem 0;
+                width: 100%;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">🧀 Cheezon</a>
+            <div class="search-container">
+                <input type="text" placeholder="Search for cheese...">
+                <button>Search</button>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Cart</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Orders</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Cheezon</h1>
+            <p>The world's largest selection of artisanal and specialty cheeses, delivered to your doorstep.</p>
+            <a href="#" class="btn">Shop Now</a>
+        </div>
+    </section>
+    
+    <section class="categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="/api/placeholder/250/150" alt="Hard Cheese">
+                </div>
+                <div class="category-content">
+                    <h3>Hard Cheeses</h3>
+                    <p>Aged cheddar, parmesan, gouda, and more</p>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="/api/placeholder/250/150" alt="Soft Cheese">
+                </div>
+                <div class="category-content">
+                    <h3>Soft Cheeses</h3>
+                    <p>Brie, camembert, ricotta, and more</p>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="/api/placeholder/250/150" alt="Blue Cheese">
+                </div>
+                <div class="category-content">
+                    <h3>Blue Cheeses</h3>
+                    <p>Roquefort, gorgonzola, stilton, and more</p>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img">
+                    <img src="/api/placeholder/250/150" alt="Artisanal Cheese">
+                </div>
+                <div class="category-content">
+                    <h3>Artisanal</h3>
+                    <p>Small-batch cheeses from local producers</p>
+                    <a href="#" class="btn">Explore</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="products-container">
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="/api/placeholder/250/200" alt="Aged Cheddar">
+                </div>
+                <div class="product-content">
+                    <h3>Aged Vermont Cheddar</h3>
+                    <p>5 Year Aged Sharp Cheddar</p>
+                    <div class="product-rating">★★★★★</div>
+                    <div class="product-price">$16.99</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="/api/placeholder/250/200" alt="French Brie">
+                </div>
+                <div class="product-content">
+                    <h3>French Brie</h3>
+                    <p>Creamy Traditional Brie from France</p>
+                    <div class="product-rating">★★★★☆</div>
+                    <div class="product-price">$12.99</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="/api/placeholder/250/200" alt="Italian Parmesan">
+                </div>
+                <div class="product-content">
+                    <h3>Parmigiano Reggiano</h3>
+                    <p>24-Month Aged Italian Parmesan</p>
+                    <div class="product-rating">★★★★★</div>
+                    <div class="product-price">$19.99</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="/api/placeholder/250/200" alt="Blue Cheese">
+                </div>
+                <div class="product-content">
+                    <h3>Roquefort</h3>
+                    <p>Classic French Blue Cheese</p>
+                    <div class="product-rating">★★★★☆</div>
+                    <div class="product-price">$15.99</div>
+                    <a href="#" class="btn">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Cheezon has completely changed how I shop for cheese. Their selection is incredible, and the cheese always arrives in perfect condition."
+                </div>
+                <div class="testimonial-author">- Sarah W., New York</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "As a cheese enthusiast, I've tried many specialty stores, but Cheezon beats them all. Their recommendations have introduced me to new favorites!"
+                </div>
+                <div class="testimonial-author">- Michael T., California</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Fast shipping, excellent packaging, and the freshest cheese I've ever ordered online. Cheezon is my go-to for all cheese needs."
+                </div>
+                <div class="testimonial-author">- Emma L., Illinois</div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Hard Cheeses</a></li>
+                    <li><a href="#">Soft Cheeses</a></li>
+                    <li><a href="#">Blue Cheeses</a></li>
+                    <li><a href="#">Artisanal Cheeses</a></li>
+                    <li><a href="#">Cheese Baskets</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Cheese Guide</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Cheezon. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
